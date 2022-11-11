@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/','welcome')->name('welcome')->middleware('guest');
+Route::post('/sign-in',[UserController::class,'UserLogin']);
+
+Route::view('/home','dashboard')->name('home')->middleware('auth');
+Route::get('/log-out',[UserController::class,'UserLogout']);
+
+Route::get('/users',[UserController::class,'viewUsers'])->name('users');
